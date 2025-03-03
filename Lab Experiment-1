@@ -1,0 +1,106 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define MAX_SIZE 100 //pre processsor directive used for creating/defining a macros.
+
+//For Insertion
+void insert(int *list, int *size)
+{
+    int pos, value;
+    printf("Enter Position: ");
+    scanf("%d", &pos);
+    printf("Enter Value: ");
+    scanf("%d", &value);
+    pos--;
+    if (pos < 0 || pos >= *size || pos > MAX_SIZE)
+        printf("Invalid position!!!!!!\n");
+    else
+    {
+        for (int i = *size; i > pos; i--)
+        {
+            list[i] = list[i - 1];
+        }
+        list[pos] = value;
+        (*size)++;
+        printf("Element Inserted!!!!!!!");
+    }
+}
+//For Displaying
+void displayList(int *list, int size)
+{
+    if (size == 0)
+    {
+        printf("List is empty!!!!!!\n");
+    }
+    else
+    {
+        int i;
+        printf("List elements are: ");
+        for (int i = 0; i < size; i++)
+        {
+            printf("%d ", list[i]);
+        }
+    }
+}
+//For Deletion
+void delete(int *list, int *size)
+{
+    int pos;
+    printf("Enter Position: ");
+    scanf("%d", &pos);
+    pos--;
+    if (pos < 0 || pos >= *size)
+        printf("Invalid position!!!!!!\n");
+    else
+    {
+        for (int i = pos; i < *size - 1; i++)
+        {
+            list[i] = list[i + 1];
+        }
+        (*size)--;
+        printf("Element Deleted!!!!!!!");
+    }
+}
+//For Searching
+void search(int *list, int size)
+{
+    int i, value, flag=0;
+    printf("Enter Value: ");
+    scanf("%d", &value);
+    for (int i = 0; i < size; i++)
+    {
+        if (list[i] == value)
+        {
+            printf("Element found at position %d\n", i + 1);
+            flag=1;
+        }
+    }
+    if(flag==0)
+    {
+        printf("Element not found!!!!!!\n");
+    }
+}
+//For Updating
+int main()
+{
+    int list[MAX_SIZE], size;
+    printf("Enter List Size: ");
+    scanf("%d", &size);
+    printf("Enter List Elements: ");
+    for (int i = 0; i < size; i++)
+    {
+        scanf("%d", &list[i]);
+    }
+    printf("Calling Insert Function:\n");
+    insert(list, &size);
+
+    printf("Calling Delete Function:\n");
+    delete(list, &size);
+
+    printf("Calling Display Function:\n");
+    displayList(list, size);
+
+    printf("Calling Search Function:\n");
+    search(list, size);
+    return 0;
+}
+  
