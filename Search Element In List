@@ -1,0 +1,30 @@
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+void searchElement(int *list, int n)
+{
+    int value, flag=0;
+    scanf("%d",&value);
+    for(int i=0; i<n; i++)
+    {
+        if(list[i]==value)
+        {
+            printf("Found");
+            flag=1;
+        }    
+    }
+        if(flag==0)
+            printf("Not Found");
+}
+int main() {
+    int n;
+    scanf("%d",&n);
+    int list[n];
+    for(int i=0; i<n; i++)
+    {
+        scanf("%d",&list[i]);
+    }
+    searchElement(list,n);
+    return 0;
+}
