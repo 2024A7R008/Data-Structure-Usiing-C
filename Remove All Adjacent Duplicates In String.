@@ -1,0 +1,32 @@
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+
+    char* removeDuplicates(char* s) {
+    int length = strlen(s);
+    char* stack = (char*)malloc(length + 1);
+    int top = -1;
+
+    for (int i = 0; i < length; i++) {
+        if (top >= 0 && stack[top] == s[i]) {
+            top--;
+        } else {
+            stack[++top] = s[i];
+        }
+    }
+
+    stack[++top] = '\0';
+    return stack;
+}
+
+int main() {
+    char s[100001];
+    scanf("%s", s);
+
+    char* result = removeDuplicates(s);
+    printf("%s\n", result);
+
+    free(result);
+    return 0;
+}
