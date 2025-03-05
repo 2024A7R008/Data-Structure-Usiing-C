@@ -1,0 +1,45 @@
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+
+void removeElement(int *arr, int *n, int val)
+{
+    int k=0;
+    
+    for (int i = 0; i < *n; i++)
+        {
+            if(arr[i] != val){
+                arr[k] = arr[i];
+                k++;
+            }
+            
+        }
+        *n = k;
+}
+
+int main()
+{
+    int n;
+    scanf("%d", &n);
+    int list[n];
+    for (int i = 0; i < n; i++)
+    {
+        scanf("%d", &list[i]);
+    }
+    int val;
+    scanf("%d",&val);
+    
+    removeElement(list, &n, val);
+    
+    for (int i = 0; i < n; i++)
+    {
+        printf("%d ", list[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
