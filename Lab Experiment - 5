@@ -62,11 +62,11 @@ char *convertInfixToPostfix(char *exp)
     return str;
 }
 
-char* strrev(char *str)
+char *strrev(char *str)
 {
-    int size = strlen(str), i,j;
+    int size = strlen(str), i, j;
     char *temp = (char *)malloc(size + 1);
-    for (i = size-1, j = 0; i >= 0; i--, j++)
+    for (i = size - 1, j = 0; i >= 0; i--, j++)
     {
         temp[j] = str[i];
     }
@@ -79,7 +79,7 @@ char *convertInfixToPrefix(char *exp)
     int size = strlen(exp), top = -1, index = 0;
     char operator[size];
     char *str = (char *)malloc(size + 1);
-    for (int i = size-1; i >= 0; i--)
+    for (int i = size - 1; i >= 0; i--)
     {
         char ch = exp[i];
         if (isdigit(ch) || isalpha(ch))
@@ -115,15 +115,72 @@ char *convertInfixToPrefix(char *exp)
     str[index] = '\0';
     return strrev(str);
 }
+char *convertPostfixtoInfix(char *exp)
+{
+    int size = strlen(exp), top = -1;
+    char stack[size][100];
+    for (int i = 0; i < size; i++)
+    {
+        char ch = exp[i];
+        if (isalnum(ch))
+        {
+            char temp[] = {ch, '\0'};
+            strcpy(stack[++top],temp);
+        }
+        else if (ch == '+' || ch == '-' || ch == '*' || ch == '/' || ch == '^'){
+            char *s1 = stack[top--];
+            char *s2 = stack[top--];
+            char s3[100];
+            snprintf(s3, 100, "(%s%c%s)", s2,ch,s1);
+            strcpy(stack[++top], s3);
+        }
+    }
+    char *s = stack[top];
+    return s; 
+}
+
+char *convertPrefixtoInfix(char *exp)
+{
+    int size = strlen(exp), top = -1;
+    char stack[size][100];
+    for (int i = size-1; i >= 0; i--)
+    {
+        char ch = exp[i];
+        if (isalnum(ch))
+        {
+            char temp[] = {ch, '\0'};
+            strcpy(stack[++top],temp);
+        }
+        else if (ch == '+' || ch == '-' || ch == '*' || ch == '/' || ch == '^'){
+            char *s1 = stack[top--];
+            char *s2 = stack[top--];
+            char s3[100];
+            snprintf(s3, 100, "(%s%c%s)", s1,ch,s2);
+            strcpy(stack[++top], s3);
+        }
+    }
+    char *s = stack[top];
+    return s; 
+}
 
 int main()
 {
     char exp[100];
     printf("Enter the infix expression: ");
     fgets(exp, sizeof(exp), stdin);
-    
+
     exp[strcspn(exp, "\n")] = '\0';
     printf("Postfix Expression: %s\n", convertInfixToPostfix(exp));
     printf("Prefix Expression: %s\n", convertInfixToPrefix(exp));
+
+    printf("Enter the Postfix expression: ");
+    fgets(exp, sizeof(exp), stdin);
+    exp[strcspn(exp, "\n")] = '\0';
+    printf("Postfix Expression: %s\n", convertPostfixtoInfix(exp));
+
+    printf("Enter the Prefix expression: ");
+    fgets(exp, sizeof(exp), stdin);
+    exp[strcspn(exp, "\n")] = '\0';
+    printf("Prefix Expression: %s\n", convertPrefixtoInfix(exp));
     return 0;
 }
